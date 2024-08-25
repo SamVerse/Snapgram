@@ -2,7 +2,7 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import { getCurrentUser } from "@/lib/appwrite/api";
 import { useNavigate } from "react-router-dom";
 import { IUser } from "@/types";
-import { account } from "@/lib/appwrite/config";
+// import { account } from "@/lib/appwrite/config";
 
 const INITIAL_USER = {
   id: "",

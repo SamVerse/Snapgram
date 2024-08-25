@@ -2,7 +2,7 @@ import {
   Route,
   Routes,
   Link,
-  Outlet,
+  // Outlet,
   useParams,
   useLocation,
 } from "react-router-dom";
