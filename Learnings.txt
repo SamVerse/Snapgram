@@ -1,0 +1,2 @@
+There were many conflicts in React query and async function returning a promise so we should not use a async function in the mutation making process 
+Remove async from useGetCurrentUser: The custom hook itself should not be asynchronous. The use Query call will handle the promise and loading/error states internally. 
