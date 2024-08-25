@@ -4,7 +4,7 @@ import {
   useMutation,
   useInfiniteQuery,
   useQueryClient,
-  QueryClient,
+  // QueryClient,
 } from "@tanstack/react-query";
 import {
   createPost,
@@ -67,14 +67,15 @@ export const useGetRecentPosts = () => {
     getNextPageParam: (lastPage) => {
       // If lastPage is empty or doesn't contain documents, stop pagination.
       if (!lastPage || lastPage.documents.length === 0) {
-        return null;
+        return undefined;
       }
-
+      
       // Safely access the last document's ID for the cursor.
       const lastDocument = lastPage.documents[lastPage.documents.length - 1];
+      // Return the $id as a string, which will be handled in getInfinitePosts
       return lastDocument.$id;
     },
-    
+    initialPageParam: undefined as string | undefined,
   });
 };
 
@@ -206,9 +207,12 @@ export const useGetPosts = () => {
 
       // Safely access the last document's ID for the cursor.
       const lastDocument = lastPage.documents[lastPage.documents.length - 1];
+      // Return the $id as a string, which will be handled in getInfinitePosts
       return lastDocument.$id;
     },
-  });
+    initialPageParam: undefined as string | undefined,
+    },
+  );
 };
 
 export const useSearchPosts = (searchTerm: string) => {

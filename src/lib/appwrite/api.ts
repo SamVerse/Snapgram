@@ -427,9 +427,13 @@ export async function getUserPosts(userId?: string) {
 }
 
 // ============================== GET INFINITE POSTS
-export async function getInfinitePosts({ pageParam }: { pageParam: number }) {
+export async function getInfinitePosts({ pageParam }: { pageParam?: string }) {
   const queries: any[] = [Query.orderDesc("$createdAt"), Query.limit(6)];
-  if (pageParam) queries.push(Query.cursorAfter(pageParam.toString()));
+
+  // Add cursorAfter query only if pageParam is provided
+  if (pageParam) {
+    queries.push(Query.cursorAfter(pageParam));
+  }
 
   try {
     const posts = await databases.listDocuments(
@@ -437,11 +441,12 @@ export async function getInfinitePosts({ pageParam }: { pageParam: number }) {
       appwriteConfig.postCollectionId,
       queries
     );
-    if (!posts) throw Error;
+    if (!posts) throw new Error("Failed to fetch posts");
 
     return posts;
   } catch (error) {
-    console.log(error);
+    console.error("Error fetching posts:", error);
+    throw error;
   }
 }
 
